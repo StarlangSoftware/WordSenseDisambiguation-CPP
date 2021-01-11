@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.17)
+project(WordSenseDisambiguation)
+
+set(CMAKE_CXX_STANDARD 17)
+
+include_directories(include)
+link_directories(library)
+
+add_library(WordSenseDisambiguation AutoProcessor/Sentence/SentenceAutoSemantic.cpp AutoProcessor/Sentence/SentenceAutoSemantic.h AutoProcessor/Sentence/TurkishSentenceAutoSemantic.cpp AutoProcessor/Sentence/TurkishSentenceAutoSemantic.h)
+
+target_link_libraries(WordSenseDisambiguation AnnotatedTree AnnotatedSentence)
