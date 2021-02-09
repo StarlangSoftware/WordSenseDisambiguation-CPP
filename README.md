@@ -63,3 +63,26 @@ Result: The imported project is listed in the Project Explorer view and files ar
 **From IDE**
 
 After being done with the downloading and opening project, select **Build Project** option from **Build** menu. After compilation process, user can run WordSenseDisambiguation-CPP.
+
+Detailed Description
+============
+
+## ParseTree
+
+In order to sense annotate a parse tree, one can use autoSemantic method of the TurkishTreeAutoSemantic class.
+
+	ParseTreeDrawable parseTree = ...
+	WordNet wordNet = WordNet();
+	FsmMorphologicalAnalyzer fsm = FsmMorphologicalAnalyzer();
+	TurkishTreeAutoSemantic turkishAutoSemantic = TurkishTreeAutoSemantic(wordnet, fsm);
+	turkishAutoSemantic.autoSemantic();
+
+## Sentence
+
+In order to sense annotate a parse tree, one can use autoSemantic method of the TurkishSentenceAutoSemantic class.
+
+	AnnotatedSentence sentence = ...
+	WordNet wordNet = WordNet();
+	FsmMorphologicalAnalyzer fsm = FsmMorphologicalAnalyzer();
+	TurkishSentenceAutoSemantic turkishAutoSemantic = TurkishSentenceAutoSemantic(wordnet, fsm);
+	turkishAutoSemantic.autoSemantic();
