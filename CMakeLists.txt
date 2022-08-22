@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.17)
 project(WordSenseDisambiguation)
-
 set(CMAKE_CXX_STANDARD 20)
 
-include_directories(include)
-link_directories(library)
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
-add_library(WordSenseDisambiguation AutoProcessor/Sentence/SentenceAutoSemantic.cpp AutoProcessor/Sentence/SentenceAutoSemantic.h AutoProcessor/Sentence/TurkishSentenceAutoSemantic.cpp AutoProcessor/Sentence/TurkishSentenceAutoSemantic.h AutoProcessor/Sentence/RandomSentenceAutoSemantic.cpp AutoProcessor/Sentence/RandomSentenceAutoSemantic.h AutoProcessor/Sentence/MostFrequentSentenceAutoSemantic.cpp AutoProcessor/Sentence/MostFrequentSentenceAutoSemantic.h AutoProcessor/Sentence/Lesk.cpp AutoProcessor/Sentence/Lesk.h)
-
-target_link_libraries(WordSenseDisambiguation AnnotatedTree AnnotatedSentence)
+add_library(WordSenseDisambiguation src/AutoProcessor/Sentence/SentenceAutoSemantic.cpp src/AutoProcessor/Sentence/SentenceAutoSemantic.h src/AutoProcessor/Sentence/TurkishSentenceAutoSemantic.cpp src/AutoProcessor/Sentence/TurkishSentenceAutoSemantic.h src/AutoProcessor/Sentence/RandomSentenceAutoSemantic.cpp src/AutoProcessor/Sentence/RandomSentenceAutoSemantic.h src/AutoProcessor/Sentence/MostFrequentSentenceAutoSemantic.cpp src/AutoProcessor/Sentence/MostFrequentSentenceAutoSemantic.h src/AutoProcessor/Sentence/Lesk.cpp src/AutoProcessor/Sentence/Lesk.h)
+target_link_libraries(WordSenseDisambiguation ${CONAN_LIBS})
