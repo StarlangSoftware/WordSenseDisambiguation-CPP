@@ -10,18 +10,18 @@
  * @param turkishWordNet Turkish wordnet
  * @param fsm Turkish morphological analyzer
  */
-MostFrequentSentenceAutoSemantic::MostFrequentSentenceAutoSemantic(WordNet &turkishWordNet, FsmMorphologicalAnalyzer &fsm) {
+MostFrequentSentenceAutoSemantic::MostFrequentSentenceAutoSemantic(const WordNet &turkishWordNet, const FsmMorphologicalAnalyzer &fsm) {
     this->turkishWordNet = turkishWordNet;
     this->fsm = fsm;
 }
 
-SynSet MostFrequentSentenceAutoSemantic::mostFrequent(vector<SynSet> synSets, string root){
+SynSet MostFrequentSentenceAutoSemantic::mostFrequent(const vector<SynSet>& synSets, const string& root){
     if (synSets.size() == 1){
         return synSets.at(0);
     }
     int minSense = 50;
     SynSet best = SynSet("");
-    for (SynSet synSet : synSets){
+    for (const SynSet& synSet : synSets){
         for (int i = 0; i < synSet.getSynonym().literalSize(); i++){
             if (Word::startsWith(Word::toLowerCase(synSet.getSynonym().getLiteral(i).getName()), root)
                 || Word::endsWith(Word::toLowerCase(synSet.getSynonym().getLiteral(i).getName()), " " + root)){

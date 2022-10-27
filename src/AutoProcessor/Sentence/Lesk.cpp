@@ -10,12 +10,12 @@
  * @param turkishWordNet Turkish wordnet
  * @param fsm Turkish morphological analyzer
  */
-Lesk::Lesk(WordNet &turkishWordNet, FsmMorphologicalAnalyzer &fsm) {
+Lesk::Lesk(const WordNet &turkishWordNet, const FsmMorphologicalAnalyzer &fsm) {
     this->turkishWordNet = turkishWordNet;
     this->fsm = fsm;
 }
 
-int Lesk::intersection(SynSet synSet, AnnotatedSentence* sentence){
+int Lesk::intersection(const SynSet& synSet, AnnotatedSentence* sentence){
     vector<string> words1;
     if (!synSet.getExample().empty()){
         words1 = Word::split(synSet.getLongDefinition() + " " + synSet.getExample());
@@ -24,8 +24,8 @@ int Lesk::intersection(SynSet synSet, AnnotatedSentence* sentence){
     }
     vector<string> words2 = Word::split(sentence->toWords());
     int count = 0;
-    for (string word1 : words1){
-        for (string word2 : words2){
+    for (const string& word1 : words1){
+        for (const string& word2 : words2){
             if (Word::toLowerCase(word1) == Word::toLowerCase(word2)){
                 count++;
             }
@@ -38,16 +38,14 @@ void Lesk::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
     for (int i = 0; i < sentence->wordCount(); i++) {
         vector<SynSet> synSets = getCandidateSynSets(turkishWordNet, fsm, sentence, i);
         int maxIntersection = -1;
-        for (int j = 0; j < synSets.size(); j++){
-            SynSet synSet = synSets.at(j);
+        for (const auto& synSet : synSets){
             int intersectionCount = intersection(synSet, sentence);
             if (intersectionCount > maxIntersection){
                 maxIntersection = intersectionCount;
             }
         }
         vector<SynSet> maxSynSets;
-        for (int j = 0; j < synSets.size(); j++){
-            SynSet synSet = synSets.at(j);
+        for (const auto& synSet : synSets){
             if (intersection(synSet, sentence) == maxIntersection){
                 maxSynSets.emplace_back(synSet);
             }

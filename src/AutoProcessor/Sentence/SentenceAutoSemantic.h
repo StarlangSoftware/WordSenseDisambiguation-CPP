@@ -15,7 +15,7 @@ protected:
      * @param sentence The sentence for which word sense disambiguation will be determined automatically.
      */
     virtual void autoLabelSingleSemantics(AnnotatedSentence* sentence) = 0;
-    vector<SynSet> getCandidateSynSets(WordNet& wordNet, FsmMorphologicalAnalyzer& fsm, AnnotatedSentence* sentence, int index);
+    vector<SynSet> getCandidateSynSets(WordNet& wordNet, const FsmMorphologicalAnalyzer& fsm, AnnotatedSentence* sentence, int index);
 public:
     void autoSemantic(AnnotatedSentence* sentence);
 };

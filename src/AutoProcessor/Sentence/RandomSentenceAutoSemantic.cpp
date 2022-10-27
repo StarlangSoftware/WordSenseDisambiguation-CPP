@@ -10,7 +10,7 @@
  * @param turkishWordNet Turkish wordnet
  * @param fsm Turkish morphological analyzer
  */
-RandomSentenceAutoSemantic::RandomSentenceAutoSemantic(WordNet &turkishWordNet, FsmMorphologicalAnalyzer &fsm) {
+RandomSentenceAutoSemantic::RandomSentenceAutoSemantic(const WordNet &turkishWordNet, const FsmMorphologicalAnalyzer &fsm) {
     this->turkishWordNet = turkishWordNet;
     this->fsm = fsm;
 }

@@ -12,7 +12,7 @@ private:
     WordNet turkishWordNet;
     FsmMorphologicalAnalyzer fsm;
 public:
-    TurkishSentenceAutoSemantic(WordNet& turkishWordNet, FsmMorphologicalAnalyzer& fsm);
+    TurkishSentenceAutoSemantic(const WordNet& turkishWordNet, const FsmMorphologicalAnalyzer& fsm);
 protected:
     void autoLabelSingleSemantics(AnnotatedSentence* sentence) override;
 };

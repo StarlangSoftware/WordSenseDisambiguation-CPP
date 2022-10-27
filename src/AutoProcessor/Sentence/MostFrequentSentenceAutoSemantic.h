@@ -11,9 +11,9 @@ class MostFrequentSentenceAutoSemantic : public SentenceAutoSemantic {
 private:
     WordNet turkishWordNet;
     FsmMorphologicalAnalyzer fsm;
-    SynSet mostFrequent(vector<SynSet> synSets, string root);
+    SynSet mostFrequent(const vector<SynSet>& synSets, const string& root);
 public:
-    MostFrequentSentenceAutoSemantic(WordNet& turkishWordNet, FsmMorphologicalAnalyzer& fsm);
+    MostFrequentSentenceAutoSemantic(const WordNet& turkishWordNet, const FsmMorphologicalAnalyzer& fsm);
 protected:
     void autoLabelSingleSemantics(AnnotatedSentence* sentence) override;
 };

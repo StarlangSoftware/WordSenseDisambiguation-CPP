@@ -9,7 +9,7 @@ void SentenceAutoSemantic::autoSemantic(AnnotatedSentence *sentence) {
 }
 
 vector<SynSet>
-SentenceAutoSemantic::getCandidateSynSets(WordNet &wordNet, FsmMorphologicalAnalyzer &fsm, AnnotatedSentence *sentence,
+SentenceAutoSemantic::getCandidateSynSets(WordNet &wordNet, const FsmMorphologicalAnalyzer &fsm, AnnotatedSentence *sentence,
                                           int index) {
     AnnotatedWord* twoPrevious = nullptr, *previous = nullptr, *current, *twoNext = nullptr, *next = nullptr;
     vector<SynSet> synSets;

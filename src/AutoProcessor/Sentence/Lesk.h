@@ -11,9 +11,9 @@ class Lesk : public SentenceAutoSemantic {
 private:
     WordNet turkishWordNet;
     FsmMorphologicalAnalyzer fsm;
-    int intersection(SynSet synSet, AnnotatedSentence* sentence);
+    int intersection(const SynSet& synSet, AnnotatedSentence* sentence);
 public:
-    Lesk(WordNet& turkishWordNet, FsmMorphologicalAnalyzer& fsm);
+    Lesk(const WordNet& turkishWordNet, const FsmMorphologicalAnalyzer& fsm);
 protected:
     void autoLabelSingleSemantics(AnnotatedSentence* sentence) override;
 };
