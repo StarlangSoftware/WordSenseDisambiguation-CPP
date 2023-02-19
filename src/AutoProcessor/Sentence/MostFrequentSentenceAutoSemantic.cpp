@@ -49,12 +49,12 @@ bool MostFrequentSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentenc
         }
         if (current->getSemantic().empty() && current->getParse() != nullptr) {
             if (twoPrevious != nullptr && twoPrevious->getParse() != nullptr && previous->getParse() != nullptr) {
-                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*twoPrevious->getParse(),
-                                                                                  *previous->getParse(),
-                                                                                  *current->getParse(),
-                                                                                  *twoPrevious->getMetamorphicParse(),
-                                                                                  *previous->getMetamorphicParse(),
-                                                                                  *current->getMetamorphicParse(),
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*(twoPrevious->getParse()),
+                                                                                  *(previous->getParse()),
+                                                                                  *(current->getParse()),
+                                                                                  *(twoPrevious->getMetamorphicParse()),
+                                                                                  *(previous->getMetamorphicParse()),
+                                                                                  *(current->getMetamorphicParse()),
                                                                                   fsm);
                 if (!literals.empty()) {
                     SynSet* bestSynset = mostFrequent(literals);
@@ -66,12 +66,12 @@ bool MostFrequentSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentenc
                 }
             }
             if (previous != nullptr && previous->getParse() != nullptr && next != nullptr && next->getParse() != nullptr) {
-                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*previous->getParse(),
-                                                                                 *current->getParse(),
-                                                                                 *next->getParse(),
-                                                                                 *previous->getMetamorphicParse(),
-                                                                                 *current->getMetamorphicParse(),
-                                                                                 *next->getMetamorphicParse(),
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*(previous->getParse()),
+                                                                                 *(current->getParse()),
+                                                                                 *(next->getParse()),
+                                                                                 *(previous->getMetamorphicParse()),
+                                                                                 *(current->getMetamorphicParse()),
+                                                                                 *(next->getMetamorphicParse()),
                                                                                  fsm);
                 if (!literals.empty()) {
                     SynSet* bestSynset = mostFrequent(literals);
@@ -83,12 +83,12 @@ bool MostFrequentSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentenc
                 }
             }
             if (next != nullptr && next->getParse() != nullptr && twoNext != nullptr && twoNext->getParse() != nullptr) {
-                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*current->getParse(),
-                                                                                 *next->getParse(),
-                                                                                 *twoNext->getParse(),
-                                                                                 *current->getMetamorphicParse(),
-                                                                                 *next->getMetamorphicParse(),
-                                                                                 *twoNext->getMetamorphicParse(),
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*(current->getParse()),
+                                                                                 *(next->getParse()),
+                                                                                 *(twoNext->getParse()),
+                                                                                 *(current->getMetamorphicParse()),
+                                                                                 *(next->getMetamorphicParse()),
+                                                                                 *(twoNext->getMetamorphicParse()),
                                                                                  fsm);
                 if (!literals.empty()) {
                     SynSet* bestSynset = mostFrequent(literals);
@@ -100,10 +100,10 @@ bool MostFrequentSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentenc
                 }
             }
             if (previous != nullptr && previous->getParse() != nullptr) {
-                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*previous->getParse(),
-                                                                                 *current->getParse(),
-                                                                                 *previous->getMetamorphicParse(),
-                                                                                 *current->getMetamorphicParse(),
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*(previous->getParse()),
+                                                                                 *(current->getParse()),
+                                                                                 *(previous->getMetamorphicParse()),
+                                                                                 *(current->getMetamorphicParse()),
                                                                                  fsm);
                 if (!literals.empty()) {
                     SynSet* bestSynset = mostFrequent(literals);
@@ -115,10 +115,10 @@ bool MostFrequentSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentenc
                 }
             }
             if (current->getSemantic().empty() && next != nullptr && next->getParse() != nullptr) {
-                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*current->getParse(),
-                                                                                 *next->getParse(),
-                                                                                 *current->getMetamorphicParse(),
-                                                                                 *next->getMetamorphicParse(),
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*(current->getParse()),
+                                                                                 *(next->getParse()),
+                                                                                 *(current->getMetamorphicParse()),
+                                                                                 *(next->getMetamorphicParse()),
                                                                                  fsm);
                 if (!literals.empty()) {
                     SynSet* bestSynset = mostFrequent(literals);
@@ -130,8 +130,8 @@ bool MostFrequentSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentenc
                 }
             }
             vector<Literal> literals = turkishWordNet.constructLiterals(current->getParse()->getWord()->getName(),
-                                                                        *current->getParse(),
-                                                                        *current->getMetamorphicParse(),
+                                                                        *(current->getParse()),
+                                                                        *(current->getMetamorphicParse()),
                                                                         fsm);
             if (current->getSemantic().empty() && !literals.empty()) {
                 SynSet* bestSynset = mostFrequent(literals);
