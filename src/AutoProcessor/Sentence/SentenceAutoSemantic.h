@@ -14,7 +14,7 @@ protected:
      * The method should set the senses of all words, for which there is only one possible sense.
      * @param sentence The sentence for which word sense disambiguation will be determined automatically.
      */
-    virtual void autoLabelSingleSemantics(AnnotatedSentence* sentence) = 0;
+    virtual bool autoLabelSingleSemantics(AnnotatedSentence* sentence) = 0;
     vector<SynSet> getCandidateSynSets(WordNet& wordNet, const FsmMorphologicalAnalyzer& fsm, AnnotatedSentence* sentence, int index);
 public:
     void autoSemantic(AnnotatedSentence* sentence);

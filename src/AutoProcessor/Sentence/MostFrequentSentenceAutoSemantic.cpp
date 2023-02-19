@@ -15,34 +15,132 @@ MostFrequentSentenceAutoSemantic::MostFrequentSentenceAutoSemantic(const WordNet
     this->fsm = fsm;
 }
 
-SynSet MostFrequentSentenceAutoSemantic::mostFrequent(const vector<SynSet>& synSets, const string& root){
-    if (synSets.size() == 1){
-        return synSets.at(0);
+SynSet* MostFrequentSentenceAutoSemantic::mostFrequent(const vector<Literal>& literals){
+    if (literals.size() == 1) {
+        return turkishWordNet.getSynSetWithId(literals[0].getSynSetId());
     }
-    int minSense = 50;
-    SynSet best = SynSet("");
-    for (const SynSet& synSet : synSets){
-        for (int i = 0; i < synSet.getSynonym().literalSize(); i++){
-            if (Word::startsWith(Word::toLowerCase(synSet.getSynonym().getLiteral(i).getName()), root)
-                || Word::endsWith(Word::toLowerCase(synSet.getSynonym().getLiteral(i).getName()), " " + root)){
-                if (synSet.getSynonym().getLiteral(i).getSense() < minSense){
-                    minSense = synSet.getSynonym().getLiteral(i).getSense();
-                    best = synSet;
+    int minSense = INT_MAX;
+    SynSet* bestSynset = nullptr;
+    for (const Literal& literal : literals) {
+        if(literal.getSense() < minSense) {
+            minSense = literal.getSense();
+            bestSynset = turkishWordNet.getSynSetWithId(literal.getSynSetId());
+        }
+    }
+    return bestSynset;
+}
+
+bool MostFrequentSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
+    bool done = false;
+    AnnotatedWord* twoPrevious = nullptr, *previous = nullptr, *current, *twoNext = nullptr, *next = nullptr;
+    for (int i = 0; i < sentence->wordCount(); i++) {
+        current = (AnnotatedWord*) sentence->getWord(i);
+        if (i > 1) {
+            twoPrevious = (AnnotatedWord*) sentence->getWord(i - 2);
+        }
+        if (i > 0) {
+            previous = (AnnotatedWord*) sentence->getWord(i - 1);
+        }
+        if (i != sentence->wordCount() - 1) {
+            next = (AnnotatedWord*) sentence->getWord(i + 1);
+        }
+        if (i < sentence->wordCount() - 2) {
+            twoNext = (AnnotatedWord*) sentence->getWord(i + 2);
+        }
+        if (current->getSemantic().empty() && current->getParse() != nullptr) {
+            if (twoPrevious != nullptr && twoPrevious->getParse() != nullptr && previous->getParse() != nullptr) {
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*twoPrevious->getParse(),
+                                                                                  *previous->getParse(),
+                                                                                  *current->getParse(),
+                                                                                  *twoPrevious->getMetamorphicParse(),
+                                                                                  *previous->getMetamorphicParse(),
+                                                                                  *current->getMetamorphicParse(),
+                                                                                  fsm);
+                if (!literals.empty()) {
+                    SynSet* bestSynset = mostFrequent(literals);
+                    if (bestSynset != nullptr){
+                        current->setSemantic(bestSynset->getId());
+                        done = true;
+                        continue;
+                    }
+                }
+            }
+            if (previous != nullptr && previous->getParse() != nullptr && next != nullptr && next->getParse() != nullptr) {
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*previous->getParse(),
+                                                                                 *current->getParse(),
+                                                                                 *next->getParse(),
+                                                                                 *previous->getMetamorphicParse(),
+                                                                                 *current->getMetamorphicParse(),
+                                                                                 *next->getMetamorphicParse(),
+                                                                                 fsm);
+                if (!literals.empty()) {
+                    SynSet* bestSynset = mostFrequent(literals);
+                    if (bestSynset != nullptr) {
+                        current->setSemantic(bestSynset->getId());
+                        done = true;
+                        continue;
+                    }
+                }
+            }
+            if (next != nullptr && next->getParse() != nullptr && twoNext != nullptr && twoNext->getParse() != nullptr) {
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*current->getParse(),
+                                                                                 *next->getParse(),
+                                                                                 *twoNext->getParse(),
+                                                                                 *current->getMetamorphicParse(),
+                                                                                 *next->getMetamorphicParse(),
+                                                                                 *twoNext->getMetamorphicParse(),
+                                                                                 fsm);
+                if (!literals.empty()) {
+                    SynSet* bestSynset = mostFrequent(literals);
+                    if (bestSynset != nullptr) {
+                        current->setSemantic(bestSynset->getId());
+                        done = true;
+                        continue;
+                    }
+                }
+            }
+            if (previous != nullptr && previous->getParse() != nullptr) {
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*previous->getParse(),
+                                                                                 *current->getParse(),
+                                                                                 *previous->getMetamorphicParse(),
+                                                                                 *current->getMetamorphicParse(),
+                                                                                 fsm);
+                if (!literals.empty()) {
+                    SynSet* bestSynset = mostFrequent(literals);
+                    if (bestSynset != nullptr) {
+                        current->setSemantic(bestSynset->getId());
+                        done = true;
+                        continue;
+                    }
+                }
+            }
+            if (current->getSemantic().empty() && next != nullptr && next->getParse() != nullptr) {
+                vector<Literal> literals = turkishWordNet.constructIdiomLiterals(*current->getParse(),
+                                                                                 *next->getParse(),
+                                                                                 *current->getMetamorphicParse(),
+                                                                                 *next->getMetamorphicParse(),
+                                                                                 fsm);
+                if (!literals.empty()) {
+                    SynSet* bestSynset = mostFrequent(literals);
+                    if (bestSynset != nullptr) {
+                        current->setSemantic(bestSynset->getId());
+                        done = true;
+                        continue;
+                    }
+                }
+            }
+            vector<Literal> literals = turkishWordNet.constructLiterals(current->getParse()->getWord()->getName(),
+                                                                        *current->getParse(),
+                                                                        *current->getMetamorphicParse(),
+                                                                        fsm);
+            if (current->getSemantic().empty() && !literals.empty()) {
+                SynSet* bestSynset = mostFrequent(literals);
+                if (bestSynset != nullptr) {
+                    current->setSemantic(bestSynset->getId());
+                    done = true;
                 }
             }
         }
     }
-    return best;
-}
-
-void MostFrequentSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
-    for (int i = 0; i < sentence->wordCount(); i++) {
-        vector<SynSet> synSets = getCandidateSynSets(turkishWordNet, fsm, sentence, i);
-        if (!synSets.empty()){
-            SynSet best = mostFrequent(synSets, ((AnnotatedWord*) sentence->getWord(i))->getParse()->getWord()->getName());
-            if (!best.getId().empty()){
-                ((AnnotatedWord*) sentence->getWord(i))->setSemantic(best.getId());
-            }
-        }
-    }
+    return done;
 }

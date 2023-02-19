@@ -15,7 +15,7 @@ private:
 public:
     Lesk(const WordNet& turkishWordNet, const FsmMorphologicalAnalyzer& fsm);
 protected:
-    void autoLabelSingleSemantics(AnnotatedSentence* sentence) override;
+    bool autoLabelSingleSemantics(AnnotatedSentence* sentence) override;
 };
 
 

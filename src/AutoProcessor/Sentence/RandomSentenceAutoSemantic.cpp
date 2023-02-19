@@ -15,11 +15,12 @@ RandomSentenceAutoSemantic::RandomSentenceAutoSemantic(const WordNet &turkishWor
     this->fsm = fsm;
 }
 
-void RandomSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
+bool RandomSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
     for (int i = 0; i < sentence->wordCount(); i++) {
         vector<SynSet> synSets = getCandidateSynSets(turkishWordNet, fsm, sentence, i);
         if (!synSets.empty()){
             ((AnnotatedWord*) sentence->getWord(i))->setSemantic(synSets.at(random() % synSets.size()).getId());
         }
     }
+    return true;
 }

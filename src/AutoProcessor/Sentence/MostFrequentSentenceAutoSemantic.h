@@ -11,11 +11,11 @@ class MostFrequentSentenceAutoSemantic : public SentenceAutoSemantic {
 private:
     WordNet turkishWordNet;
     FsmMorphologicalAnalyzer fsm;
-    SynSet mostFrequent(const vector<SynSet>& synSets, const string& root);
+    SynSet* mostFrequent(const vector<Literal>& literals);
 public:
     MostFrequentSentenceAutoSemantic(const WordNet& turkishWordNet, const FsmMorphologicalAnalyzer& fsm);
 protected:
-    void autoLabelSingleSemantics(AnnotatedSentence* sentence) override;
+    bool autoLabelSingleSemantics(AnnotatedSentence* sentence) override;
 };
 
 

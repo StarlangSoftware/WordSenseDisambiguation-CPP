@@ -34,7 +34,8 @@ int Lesk::intersection(const SynSet& synSet, AnnotatedSentence* sentence){
     return count;
 }
 
-void Lesk::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
+bool Lesk::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
+    bool done = false;
     for (int i = 0; i < sentence->wordCount(); i++) {
         vector<SynSet> synSets = getCandidateSynSets(turkishWordNet, fsm, sentence, i);
         int maxIntersection = -1;
@@ -51,7 +52,9 @@ void Lesk::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
             }
         }
         if (!maxSynSets.empty()){
+            done = true;
             ((AnnotatedWord*) sentence->getWord(i))->setSemantic(maxSynSets.at(random() % maxSynSets.size()).getId());
         }
     }
+    return done;
 }
