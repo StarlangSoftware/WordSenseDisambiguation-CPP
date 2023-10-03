@@ -5,7 +5,7 @@
 #include "Lesk.h"
 
 /**
- * Constructor for the {@link Lesk} class. Gets the Turkish wordnet and Turkish fst based
+ * Constructor for the Lesk class. Gets the Turkish wordnet and Turkish fst based
  * morphological analyzer from the user and sets the corresponding attributes.
  * @param turkishWordNet Turkish wordnet
  * @param fsm Turkish morphological analyzer

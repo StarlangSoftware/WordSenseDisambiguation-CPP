@@ -5,7 +5,7 @@
 #include "TurkishSentenceAutoSemantic.h"
 
 /**
- * Constructor for the {@link TurkishSentenceAutoSemantic} class. Gets the Turkish wordnet and Turkish fst based
+ * Constructor for the TurkishSentenceAutoSemantic class. Gets the Turkish wordnet and Turkish fst based
  * morphological analyzer from the user and sets the corresponding attributes.
  * @param turkishWordNet Turkish wordnet
  * @param fsm Turkish morphological analyzer
