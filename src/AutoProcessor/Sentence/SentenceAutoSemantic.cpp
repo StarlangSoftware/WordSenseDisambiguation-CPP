@@ -8,6 +8,18 @@ void SentenceAutoSemantic::autoSemantic(AnnotatedSentence *sentence) {
     autoLabelSingleSemantics(sentence);
 }
 
+/**
+ * The method constructs all possible senses for the word at position index in the given sentence. The method checks
+ * the previous two words and the current word; the previous, current and next word, current and the next
+ * two words to add three word multiword sense (that occurs in the Turkish wordnet) to the result list. The
+ * method then check the previous word and current word; current word and the next word to add a two word multiword
+ * sense to the result list. Lastly, the method adds all possible senses of the current word to the result list.
+ * @param wordNet Turkish wordnet
+ * @param fsm Turkish morphological analyzer
+ * @param sentence Sentence to be semantically disambiguated.
+ * @param index Position of the word to be disambiguated.
+ * @return All possible senses for the word at position index in the given sentence.
+ */
 vector<SynSet>
 SentenceAutoSemantic::getCandidateSynSets(WordNet &wordNet, const FsmMorphologicalAnalyzer &fsm, AnnotatedSentence *sentence,
                                           int index) {

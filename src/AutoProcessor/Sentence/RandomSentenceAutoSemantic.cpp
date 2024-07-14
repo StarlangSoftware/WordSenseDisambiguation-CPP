@@ -15,6 +15,13 @@ RandomSentenceAutoSemantic::RandomSentenceAutoSemantic(const WordNet &turkishWor
     this->fsm = fsm;
 }
 
+/**
+ * The method annotates the word senses of the words in the sentence randomly. The algorithm processes target
+ * words one by one. First, the algorithm constructs an array of all possible senses for the target word to
+ * annotate. Then it chooses a sense randomly.
+ * @param sentence Sentence to be annotated.
+ * @return True.
+ */
 bool RandomSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
     for (int i = 0; i < sentence->wordCount(); i++) {
         vector<SynSet> synSets = getCandidateSynSets(turkishWordNet, fsm, sentence, i);

@@ -15,6 +15,11 @@ MostFrequentSentenceAutoSemantic::MostFrequentSentenceAutoSemantic(const WordNet
     this->fsm = fsm;
 }
 
+/**
+ * Determines the synset containing the literal with the lowest sense number.
+ * @param literals an ArrayList of Literal objects
+ * @return the SynSet containing the literal with the lowest sense number, or null if the input list is empty
+ */
 SynSet* MostFrequentSentenceAutoSemantic::mostFrequent(const vector<Literal>& literals){
     if (literals.size() == 1) {
         return turkishWordNet.getSynSetWithId(literals[0].getSynSetId());
@@ -30,6 +35,16 @@ SynSet* MostFrequentSentenceAutoSemantic::mostFrequent(const vector<Literal>& li
     return bestSynset;
 }
 
+/**
+ * Checks
+ * 1. the previous two words and the current word; the previous, current and next word, current and the next
+ * two words for a three word multiword expression that occurs in the Turkish wordnet.
+ * 2. the previous word and current word; current word and the next word for a two word multiword expression that
+ * occurs in the Turkish wordnet.
+ * 3. the current word
+ * and sets the most frequent sense for that multiword expression or word.
+ * @param sentence The sentence for which word sense will be determined automatically.
+ */
 bool MostFrequentSentenceAutoSemantic::autoLabelSingleSemantics(AnnotatedSentence *sentence) {
     bool done = false;
     AnnotatedWord* twoPrevious = nullptr, *previous = nullptr, *current, *twoNext = nullptr, *next = nullptr;
