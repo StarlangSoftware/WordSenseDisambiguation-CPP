@@ -21,7 +21,7 @@ void SentenceAutoSemantic::autoSemantic(AnnotatedSentence *sentence) {
  * @return All possible senses for the word at position index in the given sentence.
  */
 vector<SynSet>
-SentenceAutoSemantic::getCandidateSynSets(WordNet &wordNet, const FsmMorphologicalAnalyzer &fsm, AnnotatedSentence *sentence,
+SentenceAutoSemantic::getCandidateSynSets(WordNet &wordNet, const FsmMorphologicalAnalyzer &fsm, const AnnotatedSentence *sentence,
                                           int index) {
     AnnotatedWord* twoPrevious = nullptr, *previous = nullptr, *current, *twoNext = nullptr, *next = nullptr;
     vector<SynSet> synSets;

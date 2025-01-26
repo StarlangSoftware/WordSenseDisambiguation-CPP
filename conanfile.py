@@ -21,7 +21,8 @@ class WordSenseDisambiguationConan(ConanFile):
                 "senti_net/1.0.0",
                 "xml_parser/1.0.0",
                 "word_net/1.0.0",
-                "parse_tree/1.0.0"]
+                "parse_tree/1.0.0",
+                "util/1.0.0"]
     license = "GPL License"
     author = "Olcay Taner Yildiz olcay.yildiz@ozyegin.edu.tr"
     url = "https://github.com/StarlangSoftware/WordSenseDisambiguation-CPP"

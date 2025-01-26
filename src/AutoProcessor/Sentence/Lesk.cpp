@@ -3,6 +3,7 @@
 //
 
 #include "Lesk.h"
+#include "StringUtils.h"
 
 /**
  * Constructor for the Lesk class. Gets the Turkish wordnet and Turkish fst based
@@ -23,14 +24,14 @@ Lesk::Lesk(const WordNet &turkishWordNet, const FsmMorphologicalAnalyzer &fsm) {
  * @return The number of words that occur (i) in the definition or example of the given synset and (ii) in the given
  * sentence.
  */
-int Lesk::intersection(const SynSet& synSet, AnnotatedSentence* sentence){
+int Lesk::intersection(const SynSet& synSet, const AnnotatedSentence* sentence){
     vector<string> words1;
     if (!synSet.getExample().empty()){
-        words1 = Word::split(synSet.getLongDefinition() + " " + synSet.getExample());
+        words1 = StringUtils::split(synSet.getLongDefinition() + " " + synSet.getExample());
     } else {
-        words1 = Word::split(synSet.getLongDefinition());
+        words1 = StringUtils::split(synSet.getLongDefinition());
     }
-    vector<string> words2 = Word::split(sentence->toWords());
+    vector<string> words2 = StringUtils::split(sentence->toWords());
     int count = 0;
     for (const string& word1 : words1){
         for (const string& word2 : words2){
