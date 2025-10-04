@@ -4,6 +4,8 @@
 
 #include "MostFrequentSentenceAutoSemantic.h"
 
+#include <climits>
+
 /**
  * Constructor for the MostFrequentSentenceAutoSemantic class. Gets the Turkish wordnet and Turkish fst based
  * morphological analyzer from the user and sets the corresponding attributes.
